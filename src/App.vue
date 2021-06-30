@@ -43,6 +43,7 @@ export default {
     }
     .col-lg-10{
       padding-top: 15px;
+      background-color: #f3f2f2;
     }
   }
 }

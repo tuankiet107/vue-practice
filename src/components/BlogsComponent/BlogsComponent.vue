@@ -5,12 +5,15 @@
       <h3 class="title-5 m-b-35">Danh mục bài viết</h3>
       <div class="table-data__tool">
         <div class="table-data__tool-right">
-          <button class="btn btn-outline-primary">
-            <i class="zmdi zmdi-plus"></i>Thêm mới</button>
+          <router-link :to="{ name: 'PostComponent' }">
+            <button class="btn btn-outline-primary">
+              Thêm mới
+            </button>
+          </router-link>
         </div>
       </div>
-      <div class="table-responsive table-responsive-data2">
-        <table class="table table-data2 table-responsive">
+      <div class="card mt-3">
+        <table class="table">
           <thead>
           <tr>
             <th>#</th>
@@ -29,7 +32,7 @@
             <td class="action">
               <router-link class="btn btn-edit" :to="{ name: 'UpdateComponent' }">Sửa</router-link>
               <button class="btn btn-danger btn-delete" @click="deleteItem(item.id)">Xóa</button>
-              <button class="btn btn-outline-primary btn-detail">Chi tiết</button>
+              <button class="btn btn-outline-secondary btn-detail">Chi tiết</button>
             </td>
           </tr>
           <tr class="spacer"></tr>
@@ -44,7 +47,7 @@
 <script>
 import axios from 'axios';
 export default {
-  name: 'Blog',
+  name: 'BlogsComponent',
   data: function(){
     return {
       blogs: [],
@@ -73,6 +76,9 @@ export default {
 </script>
 
 <style lang="scss" scope>
+.card{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px !important;
   table{
     tr{
       text-align: center;
@@ -81,6 +87,14 @@ export default {
       .btn-delete{
         margin: 0 5px;
       }
+      .btn-edit{
+        border: 1px solid #3387f5;
+        &:hover{
+          background-color: #1461c5;
+          color: #fff;
+        }
+      }
     }
   }
+}
 </style>

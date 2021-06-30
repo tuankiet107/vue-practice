@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-component">
-    <h4>Administrator</h4>
+    <h5>Administrator</h5>
     <ul>
       <li>
         <router-link to="/">Blog</router-link>
@@ -25,7 +25,7 @@ export default {
 .sidebar-component{
   padding: 20px 0;
   height: 100vh;
-  h4{
+  h5{
     text-transform: uppercase;
     text-align: center;
     color: #fff;
@@ -34,7 +34,6 @@ export default {
     padding: 0;
     li{
       list-style: none;
-      padding: 10px 0 10px 25px;
       cursor: pointer;
       &:hover{
         background-color: #205a8a;
@@ -43,6 +42,7 @@ export default {
         color: #fff;
         text-decoration: none;
         display: block;
+        padding: 10px 0 10px 25px;
       }
     }
   }
