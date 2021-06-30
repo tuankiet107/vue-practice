@@ -14,7 +14,7 @@ export default new Router({
       component: BlogsComponent,
     },
     {
-      path: "/update",
+      path: "/update/:id",
       name: "UpdateComponent",
       component: UpdateComponent,
     },

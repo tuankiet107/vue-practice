@@ -30,9 +30,9 @@
             <td>{{ item.description }}</td>
             <td>{{ item.meta }}</td>
             <td class="action">
-              <router-link class="btn btn-edit" :to="{ name: 'UpdateComponent' }">Sửa</router-link>
+              <router-link class="btn btn-edit" :to="{ name: 'UpdateComponent', params: {id: item.id} }">Sửa</router-link>
               <button class="btn btn-danger btn-delete" @click="deleteItem(item.id)">Xóa</button>
-              <button class="btn btn-outline-secondary btn-detail">Chi tiết</button>
+              <button class="btn btn-outline-secondary btn-detail" :to="{ name: 'BlogItemComponent', params: {id: item.id} }">Chi tiết</button>
             </td>
           </tr>
           <tr class="spacer"></tr>
@@ -51,6 +51,7 @@ export default {
   data: function(){
     return {
       blogs: [],
+      onload: 0,
     }
   },
   created() {
@@ -65,11 +66,14 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      // axios.delete(`http://api.vndevhost.com/api/v1/admin/categories/delete/${id}`)
-      // .then(res => {
-      //   console.log(res.data);
-      // })
-      console.log(id)
+      axios.delete(`http://api.vndevhost.com/api/v1/admin/categories/delete`, { id })
+      .then(res => {
+        console.log(res.data);
+        this.onload = Math.random();
+      })
+      .catch(error => {
+        console.log(error);
+      })
     }
   }
 }
