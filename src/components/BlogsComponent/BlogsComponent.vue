@@ -24,7 +24,7 @@
           </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in blogs" :key="index">
+            <tr v-for="(item, index) in allBlogs" :key="index">
             <td>{{  index + 1 }}</td>
             <td>{{ item.categoryName }}</td>
             <td>{{ item.description }}</td>
@@ -32,7 +32,6 @@
             <td class="action">
               <router-link class="btn btn-edit" :to="{ name: 'UpdateComponent', params: {id: item.id} }">Sửa</router-link>
               <button class="btn btn-danger btn-delete" @click="deleteItem(item.id)">Xóa</button>
-              <button class="btn btn-outline-secondary btn-detail" :to="{ name: 'BlogItemComponent', params: {id: item.id} }">Chi tiết</button>
             </td>
           </tr>
           <tr class="spacer"></tr>
@@ -45,37 +44,22 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: 'BlogsComponent',
-  data: function(){
-    return {
-      blogs: [],
-      onload: 0,
+  computed: mapGetters(['allBlogs']),
+  methods: {
+    ...mapActions(['getBlogs', 'deleteBlog']),
+    async deleteItem(id) {
+      this.deleteBlog(id);
+      setTimeout(() => {
+        this.getBlogs();
+      },100)
     }
   },
   created() {
-    axios.get("http://api.vndevhost.com/api/v1/admin/categories/get")
-    .then(response => {
-      this.blogs = response.data.data;
-      console.log(this.blogs)
-    })
-    .catch(e => {
-      console.log(e)
-    })
+    this.getBlogs();
   },
-  methods: {
-    deleteItem(id) {
-      axios.delete(`http://api.vndevhost.com/api/v1/admin/categories/delete`, { id })
-      .then(res => {
-        console.log(res.data);
-        this.onload = Math.random();
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
-  }
 }
 </script>
 

@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import { mapActions } from 'vuex';
 export default {
     name: "PostComponent",
     data: function(){
@@ -40,14 +41,12 @@ export default {
         }
     },
     methods: {
-        createBlog(e){
-            e.preventDefault();
-            axios.post(`http://api.vndevhost.com/api/v1/admin/categories/save`, this.blog)
-            .then(() => {
-                this.$router.push({ name: 'BlogsComponent', query: { redirect: '/' } });
-            }).catch(error => {
-                console.log(error);
-            })
+        ...mapActions(['postBlog']),
+        createBlog(){
+            this.postBlog(this.blog);
+            setTimeout(() => {
+                this.$router.push({ name: 'BlogsComponent', query: { redirect: '/' } });    
+            },100)
         }
     }
 }

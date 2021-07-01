@@ -23,10 +23,5 @@ export default new Router({
       name: "PostComponent",
       component: PostComponent,
     },
-    {
-      path: "/details/:id",
-      name: "BlogItemComponent",
-      component: PostComponent,
-    },
   ],
 });

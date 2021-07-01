@@ -18,7 +18,7 @@
                     <input type="text" class="form-control" v-model="blog.meta">
                 </div>
                 <div class="mb-3">
-                    <button @click="updateBlog" class="btn btn-outline-primary">Lưu</button>
+                    <button @click="onClick" class="btn btn-outline-primary">Lưu</button>
                 </div>
             </div>
         </div>
@@ -26,36 +26,37 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 export default {
     name: "UpdateComponent",
     data: function(){
       return {
         blog: {
-          id: 0,
+          id: this.$route.params.id,
           categoryName: "",
           description: "",
           meta: "",
         },
       }
     },
-    created(){
-      // this.blog.id = this.$route.params.id;
-      // axios.get(`http://api.vndevhost.com/api/v1/admin/categories/details`, {id: this.$route.params.id})
-      // .then(res => {
-      //   console.log(res.data);
-      // }).catch(error => console.log(error))
-    },
+    computed: mapGetters(['blogItem']),
     methods: {
-        updateBlog(e){
-            e.preventDefault();
-            axios.put(`http://api.vndevhost.com/api/v1/admin/categories/update`, this.blog)
-            .then(() => {
-              this.$router.push({ name: 'BlogsComponent', query: { redirect: '/' } });
-            }).catch(error => {
-                console.log(error);
-            })
+        ...mapActions(['updateBlog', 'getBlog']),
+        onClick(){
+            this.updateBlog(this.blog);
+            setTimeout(() => {
+                this.$router.push({ name: 'BlogsComponent'});
+            },100)
+
         }
+    },
+    created(){
+        this.getBlog(this.blog.id);
+        setTimeout(() => {
+            this.blog.categoryName = this.blogItem.categoryName;
+            this.blog.description = this.blogItem.description;
+            this.blog.meta = this.blogItem.meta;
+        },100)
     }
 }
 </script>
